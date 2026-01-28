@@ -21,9 +21,10 @@ jobs:
       uses: actions/setup-node@v4
       with:
         node-version: '18'
+        cache: 'npm'
 
     - name: Install dependencies
-      run: npm install
+      run: npm ci
 
     - name: Build frontend
       run: npm run build
@@ -40,6 +41,7 @@ jobs:
         path: dist/*
         retention-days: 30
         compression-level: 6
+        if-no-files-found: warn
 
     # 创建 GitHub Release
     - name: Create Release
@@ -51,5 +53,6 @@ jobs:
           dist/*.dmg
         draft: false
         prerelease: false
+        fail_on_unmatched_files: true
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
