@@ -4,7 +4,7 @@ on:
   push:
     tags:
       - 'v*'
-  workflow_dispatch:  # 允许手动触发
+  workflow_dispatch:
 
 jobs:
   build:
@@ -43,9 +43,8 @@ jobs:
         compression-level: 6
         if-no-files-found: warn
 
-    # 创建 GitHub Release
     - name: Create Release
-      if: matrix.os == 'windows-latest'  # 只在 Windows 构建后创建一次
+      if: matrix.os == 'windows-latest'
       uses: softprops/action-gh-release@v1
       with:
         files: |
